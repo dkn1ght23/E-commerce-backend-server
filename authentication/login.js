@@ -1,7 +1,9 @@
 const bcrypt = require("bcrypt");
 const database = require("../database");
 const asyncHandler = require("express-async-handler");
+
 const dbConnection = database().getConnection();
+const jwtToken = require('./token');
 
 let loginApi = async (req, res) => {
 
@@ -50,10 +52,18 @@ let loginApi = async (req, res) => {
                         status: 400
                     })
                 } else{
-                    res.json({
-                        message: 'log-in complete',
-                        status: 200,
-                    })
+                    let token = await jwtToken.getLoggedInUsersToken(user);
+                    if(token){
+                        res.json({
+                            token: token,
+                            success: true,
+                        })
+                    }else{
+                        res.status(400).json({
+                            message: 'Login failed due to token generation failed',
+                            status: 400
+                        })
+                    }
                 }
             } else{
                 res.status(400).json({
