@@ -17,6 +17,19 @@ let generateToken = async (payload) => {
     });
 }
 
+let decodeToken = (token) => {
+    if (!token)
+        return null
+    try {
+        return jwt.verify(token, TOKEN_SECRET, {algorithm: 'HS256'});
+    } catch (e) {
+        console.log('Invalid token found');
+        console.log(e.message);
+        return null;
+    }
+}
+
+
 let getUserRoles = async (userId) => {
     const query = "SELECT Role FROM userroles where UserId=?";
     const fields = [userId];
@@ -49,5 +62,6 @@ let getLoggedInUserToken = async (user) => {
 }
 
 module.exports = {
-    getLoggedInUsersToken: getLoggedInUserToken
+    getLoggedInUsersToken: getLoggedInUserToken,
+    decodeToken: decodeToken
 }
