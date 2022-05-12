@@ -4,6 +4,7 @@ const authentication = require('./authentication');
 const middlewares = require('./middlewares');
 const welcome = require('./welcome');
 const uamModule = require('./uam');
+const blogModule = require('./blog');
 
 
 const app = express();
@@ -20,6 +21,10 @@ welcome(app);
 
 //initializing uam
 uamModule(app);
+
+//initializing blogModule
+blogModule(app);
+
 
 app.listen(port, () => {
     console.log('Server is running at port: ', port);

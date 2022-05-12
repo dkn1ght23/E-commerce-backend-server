@@ -29,6 +29,11 @@ let decodeToken = (token) => {
     }
 }
 
+let decodeTokenFromRequest = (req) => {
+    let authToken = req.headers.authentication;
+    return decodeToken(authToken);
+}
+
 
 let getUserRoles = async (userId) => {
     const query = "SELECT Role FROM userroles where UserId=?";
@@ -63,5 +68,6 @@ let getLoggedInUserToken = async (user) => {
 
 module.exports = {
     getLoggedInUsersToken: getLoggedInUserToken,
-    decodeToken: decodeToken
+    decodeToken: decodeToken,
+    decodeTokenFromRequest: decodeTokenFromRequest
 }

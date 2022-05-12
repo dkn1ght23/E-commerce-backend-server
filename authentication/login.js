@@ -13,8 +13,8 @@ let loginApi = async (req, res) => {
     let email = params.Email;
     let password = params.Password;
 
-    console.log(email);
-    console.log(password);
+    //console.log(email);
+    //console.log(password);
 
 
     if(!email || !password){
